@@ -1,52 +1,41 @@
 <?php
 
-class Movie
-{
-    public $title;
-    public $genre;
-    public $language;
-    public $rank;
-    public $recomend = '';
+include __DIR__ . '/models/index.php';
+include __DIR__ . '/data/movies.php';
 
-    public function __construct($title, $genre, $language, $rank)
-    {
-        $this->title = $title;
-        $this->genre = $genre;
-        $this->language = $language;
-        $this->rank = $rank;
-    }
+?>
 
-    public function set_recomend()
-    {
-        if ($this->rank > 3) {
-            $this->recomend = 'Consigliato';
-        } else $this->recomend = 'Non consigliato';
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    public function get_recomend()
-    {
-        return $this->recomend;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-    public function all_print($movies)
-    {
-        foreach ($movies as $movie) {
-            $this->set_recomend();
-            $this->get_recomend();
-            echo $movie;
-            echo "<br>";
-        }
-    }
-}
+<body>
+    <section>
+        <?php foreach ($movies as $movie) :
+            $movies_obj = new Movie(
+                $movie['title'],
+                $movie['genre'],
+                $movie['language'],
+                $movie['rank'],
+                $movie['recomend']
+            )
+        ?>
+            <h2><?= $movies_obj->title ?></h2>
+            <h4><?= $movies_obj->genre ?></h4>
+            <span><?= $movies_obj->language ?></span>
+            <h6><?= $movies_obj->rank ?></h6>
+            <span><?= $movies_obj->get_recomend() ?></span>
+        <?php endforeach; ?>
+        <div>
 
-$firstMovie = new Movie('Social Network', 'Biografia', 'en', 4);
+        </div>
+    </section>
+</body>
 
-$secondMovie = new Movie('Gli Stagisti', 'Commedia', 'en', 3);
-
-$thirdMovie = new Movie('Bad Boys', 'Azione', 'en', 2);
-
-$firstMovie->all_print($firstMovie);
-
-$secondMovie->all_print($secondMovie);
-
-$thirdMovie->all_print($thirdMovie);
+</html>
