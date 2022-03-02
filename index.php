@@ -6,8 +6,9 @@ class Movie
     public $genre;
     public $language;
     public $rank;
+    public $recomend = '';
 
-    function __construct($title, $genre, $language, $rank)
+    public function __construct($title, $genre, $language, $rank)
     {
         $this->title = $title;
         $this->genre = $genre;
@@ -15,20 +16,34 @@ class Movie
         $this->rank = $rank;
     }
 
-    function all_print($movies)
+    public function set_recomend()
+    {
+        if ($this->rank > 3) {
+            $this->recomend = 'Consigliato';
+        } else $this->recomend = 'Non consigliato';
+    }
+
+    public function get_recomend()
+    {
+        return $this->recomend;
+    }
+
+    public function all_print($movies)
     {
         foreach ($movies as $movie) {
+            $this->set_recomend();
+            $this->get_recomend();
             echo $movie;
             echo "<br>";
         }
     }
 }
 
-$firstMovie = new Movie('Social Network', 'Biografia', 'en', '4');
+$firstMovie = new Movie('Social Network', 'Biografia', 'en', 4);
 
-$secondMovie = new Movie('Gli Stagisti', 'Commedia', 'en', '3');
+$secondMovie = new Movie('Gli Stagisti', 'Commedia', 'en', 3);
 
-$thirdMovie = new Movie('Bad Boys', 'Azione', 'en', '2');
+$thirdMovie = new Movie('Bad Boys', 'Azione', 'en', 2);
 
 $firstMovie->all_print($firstMovie);
 
